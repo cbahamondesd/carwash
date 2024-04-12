@@ -11,7 +11,7 @@ const FuncionarioSchema = new mongoose.Schema(
             required: [true, "El teléfono es requerido"],
             unique: true, 
             validate: {
-                validator: val => /^\d{4}-\d{4}$/.test(val),
+                validator: val => /^\d{9}$/.test(val),
                 message: "Por favor ingresa un número de teléfono válido"
             }
         },

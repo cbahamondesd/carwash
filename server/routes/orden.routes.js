@@ -3,10 +3,10 @@ import * as ordenCtrl from "../controllers/orden.controller.js";
 
 const ordenRouter = express.Router();
 
-ordenRouter.post("/api/orden/new", ordenCtrl.createorden);
-ordenRouter.get("/api/orden/get", ordenCtrl.getAllordens);
-ordenRouter.get("/api/orden/get/:id", ordenCtrl.getordenById);
-ordenRouter.put("/api/orden/update/:id", ordenCtrl.updateorden);
-ordenRouter.delete("/api/orden/delete/:id", ordenCtrl.deleteorden);
+ordenRouter.post("/api/orden/new", ordenCtrl.createOrden);
+ordenRouter.get("/api/orden/get", ordenCtrl.getAllOrdenes);
+ordenRouter.get("/api/orden/get/:id", ordenCtrl.getOrdenById);
+ordenRouter.put("/api/orden/update/:id", ordenCtrl.updateOrden);
+ordenRouter.delete("/api/orden/delete/:id", ordenCtrl.deleteOrden);
 
 export { ordenRouter };

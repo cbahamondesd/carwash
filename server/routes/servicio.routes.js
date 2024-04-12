@@ -1,10 +1,12 @@
-const servicioCtrl = require('../controllers/servicio.controller');
+import express from 'express';
+import * as servicioCtrl from '../controllers/servicio.controller.js';
 
-module.exports = function(app){
+const servicioRouter = express.Router();
 
-    app.post("/api/servicio/new", servicioCtrl.createServicio);
-    app.get("/api/servicio/", servicioCtrl.getAllServicios);
-    app.get("/api/servicio/:id", servicioCtrl.getServicioById);
-    app.put("/api/servicio/update/:id", servicioCtrl.updateServicio);
-    app.delete("/api/servicio/delete/:id", servicioCtrl.deleteServicio);
-}
+servicioRouter.post("/api/servicio/new", servicioCtrl.createServicio);
+servicioRouter.get("/api/servicio/", servicioCtrl.getAllServicios);
+servicioRouter.get("/api/servicio/:id", servicioCtrl.getServicioById);
+servicioRouter.put("/api/servicio/update/:id", servicioCtrl.updateServicio);
+servicioRouter.delete("/api/servicio/delete/:id", servicioCtrl.deleteServicio);
+
+export { servicioRouter };

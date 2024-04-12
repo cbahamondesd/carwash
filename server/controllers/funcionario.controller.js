@@ -4,7 +4,9 @@ import Funcionario from "../models/funcionario.model.js";
 const createFuncionario = async (req, res) => {
     try {
         let data = req.body;
+        console.log(data);
         let newData = await Funcionario.create(data);
+        console.log(newData);
         res.status(200).json(newData);
     } catch (error) {
         console.log("Error" + error.message);

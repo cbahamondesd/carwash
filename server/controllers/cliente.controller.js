@@ -1,4 +1,4 @@
-import Cliente from "../models/cliente.model";
+import Cliente from "../models/cliente.model.js";
 
 //Create
 const createCliente = async (req, res) => {

@@ -4,7 +4,9 @@ import Orden from "../models/orden.model.js";
 const createOrden = async (req, res) => {
   try {
     let data = req.body;
+    console.log(data);
     let newData = await Orden.create(data);
+    console.log(newData);
     res.status(200).json(newData);
   } catch (error) {
     console.log("Error" + error.message);

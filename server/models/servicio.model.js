@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const ServicioSchema = new mongoose.Schema(
     {
@@ -8,7 +8,7 @@ const ServicioSchema = new mongoose.Schema(
             trim: true, //Para que no se guarden espacios en blanco
             unique: true 
         },
-        valor: {
+        valor_servicio: {
             type: Number,
             min : [1000, "El valor minimo del servicio no puede ser inferior a 1.000"], 
             max : [500000, "El valor maximo del servicio no puede superar los 500.000"]
@@ -19,4 +19,4 @@ const ServicioSchema = new mongoose.Schema(
 
 const Servicio = mongoose.model("servicio", ServicioSchema);
 
-module.exports = Servicio
+export default Servicio;
