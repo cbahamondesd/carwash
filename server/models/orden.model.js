@@ -14,9 +14,6 @@ const OrdenSchema = new mongoose.Schema(
     },
     cliente: [{ 
       type: mongoose.Schema.Types.ObjectId, ref: Cliente
-    }],
-    servicios: [{ 
-      type: mongoose.Schema.Types.ObjectId, ref: Servicio
     }]
   },
   { timestamps: true }

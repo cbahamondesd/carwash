@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -57,7 +59,30 @@ export default function Checkout() {
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const [servicioList, setServicioList] = React.useState([]);
+  const params = useParams();
+  const ordenId = params.id;
   const navigate = useNavigate();
+
+  const obtenerOrden = async () => {
+    try {
+      let result = axios.get("http://localhost:8000/api/orden/get/"+ ordenId)
+        .then(response => {
+          response.data.sort((a, b) => a.servicioName.localeCompare(b.servicioName));
+          setServicioList(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  } 
+
+  useEffect(() => {
+    obtenerOrden();
+  }, []);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -76,9 +101,9 @@ export default function Checkout() {
       <CssBaseline />
       <Navbar
         onClick1={irAlInicio}
-        linkName1={"Mi perfil"}
+        linkName1={"MI PERFIL"}
         onClick2={irAlInicio}
-        linkName2={"Servicios"}
+        linkName2={"SERVICIOS"}
         onClick3={irAlInicio}
         linkName3={"INICIO"}
       />
@@ -113,12 +138,7 @@ export default function Checkout() {
               href="/material-ui/getting-started/templates/landing-page/"
               sx={{ ml: '-8px', color: '#33489E' }}
             >
-              Back to
-              <img
-                src= { logo }
-                style={logoStyle}
-                alt="Logo de LavAutos"
-              />
+              Volver a mi reserva
             </Button>
           </Box>
           <Box
