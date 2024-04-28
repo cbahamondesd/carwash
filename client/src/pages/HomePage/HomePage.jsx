@@ -4,37 +4,19 @@ import { capitalizeTransform } from '../../helpers/helpers';
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
   Button,
   Paper,
-  Grid
+  Container,
+  Box
 } from '@mui/material';
+import washImg from '../../assets/img/wash.jpg';
+import vacuumImg from '../../assets/img/vacuum.jpg';
+import waxImg from '../../assets/img/wax.jpg';
+
 
 
 export const HomePage = () => {
   const navigate = useNavigate();
-
-  const [servicioList, setServicioList] = useState([]);
-  const [filteredServicios, setFilteredServicios] = useState([]);
-
-  const callServicioList = async () => {
-    try {
-      let result = await axios.get("http://localhost:8000/api/servicio/");
-      result.data.sort((a, b) => a.servicioName.localeCompare(b.servicioName));
-      setServicioList(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    callServicioList();
-  }, []);
 
   const goToEdit = (servicioId) => {
     navigate(`/servicio/update/${servicioId}`);
@@ -50,7 +32,7 @@ export const HomePage = () => {
 
 
   return (
-    <div>
+    <Container sx={{ height: "100vh"}}>
       <Navbar
         onClick1={irAlCarrito}
         linkName1={"Mi perfil"}
@@ -59,54 +41,31 @@ export const HomePage = () => {
         onClick3={irAlCarrito}
         linkName3={"Carro de compras"}
       />
-
-      <Paper variant="elevation" elevation={3} sx={{
+      <Box sx={{
         backgroundColor: "primary.main",
-        padding: "30px" }}>
-      <Paper sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "30px",     
-      }}>
+        height: "90vh",
+        display: "flex"
+        }}>
 
-      <TableContainer sx={{
-            alignItems: "center",
-            justifyContent: "center"      
-            }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Mascota</TableCell>
-              <TableCell>Tipo</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-
-          {filteredServicios.map((item, index) => {
-            return (
-              <tr key={index}>
-                <TableCell>{item.servicioName}</TableCell>
-                <TableCell>{item.servicioType}</TableCell>
-                <TableCell>
-                  <Button
-                    onClick={() => goToDetails(item._id)}
-                    >
-                    Detalle
-                  </Button>
-                  <label> | </label>
-                  <Button onClick={() => goToEdit(item._id)}>
-                    Editar
-                  </Button>
-                </TableCell>
-              </tr>
-            );
-          })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </Paper>
-      </Paper>
-    </div>
+          <Box sx={{ flex: 1, padding: "20px", overflow: "hidden" }}>
+            <img src={ washImg } alt="Wash" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }} />
+            <Button variant="contained" onClick={goToDetails} sx={{ position: "absolute", top: "85%", left: "23%", transform: "translate(-50%, -50%)" }}>
+              + Lavado exterior $1000
+            </Button>
+          </Box>
+          <Box sx={{ flex: 1, padding: "20px", borderRadius: "20px", overflow: "hidden" }}>
+            <img src={ vacuumImg } alt="Wash" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }} />
+            <Button variant="contained" onClick={goToDetails} sx={{ position: "absolute", top: "85%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            + Lavado completo $2000
+            </Button>
+          </Box>
+          <Box sx={{ flex: 1, padding: "20px", borderRadius: "20px", overflow: "hidden" }}>
+            <img src={ waxImg } alt="Wash" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }} />
+            <Button variant="contained" onClick={goToDetails} sx={{ position: "absolute", top: "85%", left: "77%", transform: "translate(-50%, -50%)" }}>
+              + Encerado $1200
+            </Button>
+          </Box>
+      </Box>
+    </Container>
   );
 };

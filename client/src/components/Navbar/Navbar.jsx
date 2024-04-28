@@ -1,8 +1,7 @@
 import React from 'react';
 import logoBlanco from '../../assets/logo/Logo-auto-blanco.png';
 import { 
-    AppBar, 
-    Container, 
+    AppBar,
     Toolbar, 
     Typography, 
     Button,
@@ -13,8 +12,7 @@ import {
 const Navbar = (props) => {
     
     return (
-    <AppBar position="static" sx={{ backgroundColor: "#33489E" }}>
-        <Container>
+    <AppBar position="static" sx={{ backgroundColor: "#33489E", width: "100%"}}>
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
                 <Box sx={{display: "flex", alignItems: "center"}}>
                     <img src={logoBlanco} alt="logo" className="logo" height={50}/>
@@ -36,8 +34,7 @@ const Navbar = (props) => {
                     </div>
                 </Box>
 
-            </Toolbar>
-        </Container>
+            </Toolbar> 
     </AppBar>
     )
 }
