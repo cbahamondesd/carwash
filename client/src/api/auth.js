@@ -1,10 +1,12 @@
 import axios from "./axios";
 
 
-export const registerRequest = user => axios.post(`/register`, user)
+export const registerRequest = funcionario => axios.post(`/register`, funcionario)
 
-export const loginRequest = user => axios.post(`/login`, user)
+export const loginRequest = funcionario => axios.post(`/login`, funcionario)
 
 export const verifyTokenRequet = () => axios.get(`/verify`)
 
-export const getUserByIdRequest = userId => axios.get(`/users/${userId}`)
+export const getAllFuncionariosRequest = () => axios.get(`/funcionarios`)
+
+export const getFuncionarioByIdRequest = funcionarioId => axios.get(`/funcionarios/${funcionarioId}`)

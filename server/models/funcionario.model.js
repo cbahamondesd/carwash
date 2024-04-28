@@ -2,29 +2,29 @@ import mongoose from "mongoose";
 
 const FuncionarioSchema = new mongoose.Schema(
     {
-        nombreFuncionario: {
+        nombre: {
         type: String,
         required: [true, "El nombre es requerido"],
         },
-        telefono: {
+        apellido: {
             type: String,
-            required: [true, "El teléfono es requerido"],
-            unique: true, 
-            validate: {
-                validator: val => /^\d{9}$/.test(val),
-                message: "Por favor ingresa un número de teléfono válido"
-            }
+            required: [true, "El apellido es requerido"],
         },
         email: {
             type: String,
             required: [true, "El correo electrónico es requerido"],
             unique: true, // Asegura que el correo electrónico sea único
-            lowercase: true,  
+            lowercase: true,
+            trim: true,
             validate: {
                 validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
                 message: "Por favor ingresa un correo electrónico válido"
             }
-        }
+        },
+        password: {
+            type: String,
+            required: [true, "La contraseña es requerida"],
+        },
     },
     { timestamps: true }
 );

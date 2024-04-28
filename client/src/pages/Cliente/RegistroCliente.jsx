@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { useForm } from "react-hook-form"; // Importamos el hook de react-hook-form
+import { useForm } from "react-hook-form";
 
 import { useAuth } from "../../Context/AuthContext"; // Importamos el contexto de usuario
 import { useNavigate, NavLink } from "react-router-dom";

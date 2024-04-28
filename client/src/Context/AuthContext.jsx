@@ -3,7 +3,7 @@ import {
     registerRequest,
     loginRequest,
     verifyTokenRequet,
-    getUserByIdRequest
+    getFuncionarioByIdRequest
 } from "../Api/auth.js";
 
 import Cookies from "js-cookie";
@@ -18,16 +18,16 @@ export const useAuth = () => {
     };
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [funcionario, setFuncionario] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const signup = async (user) => {
+    const signup = async (funcionario) => {
         try {
-        const res = await registerRequest(user);
+        const res = await registerRequest(funcionario);
         console.log(res.data);
-        setUser(res.data);
+        setFuncionario(res.data);
         setIsAuthenticated(true);
         } catch (error) {
         // console.log(error.response);
@@ -35,11 +35,11 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const signin = async (user) => {
+    const signin = async (funcionario) => {
         try {
-        const res = await loginRequest(user);
+        const res = await loginRequest(funcionario);
         console.log(res);
-        setUser(res.data);
+        setFuncionario(res.data);
         setIsAuthenticated(true);
         } catch (error) {
         setErrors(error.response.data);
@@ -48,16 +48,16 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         Cookies.remove("token");
-        setUser(null);
+        setFuncionario(null);
         setIsAuthenticated(false);
     };
 
-    const getUserById = async (userId) => {
+    const getFuncionarioByIdRequest = async (funcionarioId) => {
         try {
-        const res = await getUserByIdRequest(userId);
+        const res = await getFuncionarioByIdRequest(funcionarioId);
         return res.data; 
         } catch (error) {
-        console.error("Error fetching user by ID:", error);
+        console.error("Error fetching funcionario by ID:", error);
         return null;
         }
     };
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         if (!cookies.token) {
             setIsAuthenticated(false);
             setLoading(false);
-            return setUser(null);
+            return setFuncionario(null);
         }
 
         try {
@@ -90,11 +90,11 @@ export const AuthProvider = ({ children }) => {
             return;
             }
             setIsAuthenticated(true);
-            setUser(res.data);
+            setFuncionario(res.data);
             setLoading(false);
         } catch (error) {
             setIsAuthenticated(false);
-            setUser(null);
+            setFuncionario(null);
             setLoading(false);
         }
         }
@@ -107,11 +107,11 @@ export const AuthProvider = ({ children }) => {
             signup,
             signin,
             loading,
-            user,
+            funcionario,
             isAuthenticated,
             errors,
             logout,
-            getUserById
+            getFuncionarioByIdRequest
         }}
         >
         {children}

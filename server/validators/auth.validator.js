@@ -2,7 +2,7 @@ import z from "zod"; // Importamoms zod para validar los datos
 
 export const registerSchema = z.object({
 
-    firstName: z
+    nombre: z
         .string({
         message: "El nombre es requerido",
         })
@@ -10,14 +10,13 @@ export const registerSchema = z.object({
         message: "El nombre debe tener al menos 3 caracteres",
         }), 
 
-        apellido: z
+    apellido: z
         .string({
         message: "El apellido es requerido",
         })
         .min(3, {
         message: "El apellido debe tener al menos 3 caracteres",
         }), 
-
 
     email: z
         .string({
@@ -26,8 +25,6 @@ export const registerSchema = z.object({
         .email({
         message: "Email no válido",
         }),
-
-
     
     password: z
         .string({
