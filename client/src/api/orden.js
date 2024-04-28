@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axios";
 
 export const createOrden = async (orden) => axios.post("http://localhost:8000/api/orden/new", orden);
 

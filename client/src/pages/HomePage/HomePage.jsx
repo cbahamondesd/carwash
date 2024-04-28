@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { capitalizeTransform } from '../../helpers/helpers';
+import { capitalizeTransform } from '../../Helpers/helpers';
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../Components/Navbar/Navbar";
 import {
   Button,
   Paper,
   Container,
   Box
 } from '@mui/material';
-import washImg from '../../assets/img/wash.jpg';
-import vacuumImg from '../../assets/img/vacuum.jpg';
-import waxImg from '../../assets/img/wax.jpg';
+import washImg from '../../Assets/img/wash.jpg';
+import vacuumImg from '../../Assets/img/vacuum.jpg';
+import waxImg from '../../Assets/img/wax.jpg';
 
 
 
@@ -44,7 +44,9 @@ export const HomePage = () => {
       <Box sx={{
         backgroundColor: "primary.main",
         height: "90vh",
-        display: "flex"
+        display: "flex",
+        paddingTop: "20px",
+        paddingBottom: "20px"
         }}>
 
           <Box sx={{ flex: 1, padding: "20px", overflow: "hidden" }}>

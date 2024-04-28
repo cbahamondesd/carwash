@@ -1,5 +1,5 @@
 import React from 'react';
-import logoBlanco from '../../assets/logo/Logo-auto-blanco.png';
+import logoBlanco from '../../Assets/logo/Logo-auto-blanco.png';
 import { 
     AppBar,
     Toolbar, 

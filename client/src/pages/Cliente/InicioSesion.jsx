@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../assets/theme/theme.js';
+import theme from '../../Assets/theme/theme.js';
 
 function Copyright(props) {
     return (
@@ -97,7 +97,7 @@ export default function SignIn() {
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                     </Link>
                 </Grid>
