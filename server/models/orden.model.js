@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import Cliente from "./cliente.model.js";
 import Servicio from "./servicio.model.js";
+import Funcionario from "./funcionario.model.js";
 
 const OrdenSchema = new mongoose.Schema(
   {
     fecha: {
       type: Date,
-      required: [true, "La fecha es requerida"]
+      default: Date.now
     },
     mtoTotal: {
       type: Number,
@@ -14,7 +15,14 @@ const OrdenSchema = new mongoose.Schema(
     },
     cliente: [{ 
       type: mongoose.Schema.Types.ObjectId, ref: Cliente
+    }],
+    servicio:[{ 
+      type: mongoose.Schema.Types.ObjectId, ref: Servicio
+    }],
+    funcionario:[{ 
+      type: mongoose.Schema.Types.ObjectId, ref: Funcionario
     }]
+
   },
   { timestamps: true }
 );
