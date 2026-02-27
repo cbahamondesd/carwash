@@ -50,6 +50,7 @@ const Navbar = (props) => {
                     {props.linkName1 && <Button onClick={props.onClick1}>{props.linkName1}</Button>}
                     {props.linkName2 && <Button onClick={props.onClick2}>{props.linkName2}</Button>}
                     {props.linkName3 && <Button onClick={props.onClick3}>{props.linkName3}</Button>}
+                    {props.linkName4 && <Button onClick={props.onClick4}>{props.linkName4}</Button>}
                     {isAuthenticated
                         ? <Button onClick={logout} sx={{ fontStyle: "italic", textTransform: "lowercase" }}>Cerrar sesión</Button>
                         : <Button onClick={() => navigate("/login")} sx={{ textTransform: "lowercase" }}>Iniciar sesión</Button>

@@ -11,14 +11,13 @@ import {
     TableCell,
     TableContainer,
     TableBody,
-    Button,
     Typography,
     Paper,
     Box,
 } from '@mui/material';
-import { ButtonComp } from "../../../components/ButtonComp/ButtonComp";
+import { ButtonPrimary } from "../../../components/ButtonComp/ButtonPrimary";
 
-const ServiciosList = () => {
+const ListadoServicios = () => {
     const { servicios, getAllServicios } = useServicios();
     const navigate = useNavigate();
 
@@ -61,13 +60,12 @@ const ServiciosList = () => {
                                         <TableCell>{item.descripcion}</TableCell>
                                         <TableCell>${item.valor_servicio?.toLocaleString("es-CL")}</TableCell>
                                         <TableCell>
-                                            <ButtonComp
-                                                variant="contained"
+                                            <ButtonPrimary
                                                 name="Nueva orden"
                                                 onClick={() => navigate("/registro-orden", { state: { preselectedId: item._id } })}
                                             >
                                                 Nueva orden
-                                            </ButtonComp>
+                                            </ButtonPrimary>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -80,4 +78,4 @@ const ServiciosList = () => {
     );
 };
 
-export default ServiciosList;
+export default ListadoServicios;

@@ -2,7 +2,7 @@ import {
   Button
 } from "@mui/material";
 
-export const ButtonComp = (props) => {
+export const ButtonPrimary = (props) => {
   return (
     <Button
       type={props.type}

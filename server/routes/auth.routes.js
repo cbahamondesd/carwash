@@ -9,9 +9,9 @@ import {
     getFuncionarioById
 } from "../controllers/auth.controller.js"; 
 
-import { authRequired } from "../middlewares/validateToken.js";
+import { authRequired } from "../middleware/validateToken.js";
 
-import { validateSchema } from "../middlewares/validator.middleware.js";
+import { validateSchema } from "../middleware/validator.middleware.js";
 
 import { registerSchema, loginSchema } from "../validators/auth.validator.js";
 
@@ -36,4 +36,4 @@ router.get("/funcionarios", getAllFuncionarios);
 
 router.get("/funcionarios/:id", getFuncionarioById); 
 
-export default router; 
+export { router }; 

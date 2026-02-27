@@ -1,21 +1,19 @@
 import Cliente from "../models/cliente.model.js";
 
-//Create
 const createCliente = async (req, res) => {
     try {
-        let data = req.body;
+        let data = { ...req.body, creadoPor: req.user.id};
         let newData = await Cliente.create(data);
         res.status(200).json(newData);
     }
     catch (error) {
         console.log("Error" + error.message);
         res.status(400).json({
-            message: "Por favor, complete los campos requeridos."
+            message: error.message
         });
     }
 }
 
-//Get All
 const getAllClientes = async (req, res) => {
     try {
         let list = await Cliente.find().sort({ clienteType: 1 }).exec();
@@ -28,7 +26,6 @@ const getAllClientes = async (req, res) => {
     }
 };
 
-// Get by id
 const getClienteById = async (req, res) => {
     try {
         let id = req.params.id;
@@ -42,7 +39,6 @@ const getClienteById = async (req, res) => {
     }
 };
 
-//Update
 const updateCliente = async (req, res) => {
     try {
         let id = req.params.id;
@@ -57,7 +53,6 @@ const updateCliente = async (req, res) => {
     }
 };
 
-//Delete
 const deleteCliente = async (req, res) => {
     try {
         let id = req.params.id;

@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { ButtonComp } from '../ButtonComp/ButtonComp';
+import { ButtonComp } from '../ButtonComp/ButtonPrimary';
 import {
     Box
 } from '@mui/material';
 
 const FormComp = (props) => {
     const { initialName, initialPosition, initialGameOne, initialGameTwo, initialGameThree, onSubmitProp } = props;
-    const [name, setName] = useState(initialName);
-    const [position, setPosition] = useState(initialPosition);
-    const [gameOne, setGameOne] = useState(initialGameOne);
+    const [name, setName] = useState("");
+    const [telefono, setTelefono] = useState("");
     const [gameTwo, setGameTwo] = useState(initialGameTwo);
     const [gameThree, setGameThree] = useState(initialGameThree);
 

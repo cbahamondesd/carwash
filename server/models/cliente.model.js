@@ -37,6 +37,11 @@ const ClienteSchema = new mongoose.Schema(
                 }
             }
         ],
+        creadoPor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "funcionario",
+            required: [true, "El cliente debe ser asociado a un funcionario."]
+        },
         id_orden: {
                 type: Number,
                 unique: true,

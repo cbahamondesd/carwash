@@ -25,6 +25,8 @@ export const HomePage = () => {
         linkName2={"Servicios"}
         onClick3={isAuthenticated ? () => navigate("/ordenes") : null}
         linkName3={isAuthenticated ? "Ordenes" : null}
+        onClick4={isAuthenticated ? () => navigate("/clientes") : null}
+        linkName4={isAuthenticated ? "Clientes" : null}
       />
       <Box sx={{ flex: 1, minHeight: 0, maxWidth: "72rem", mx: "auto", py: {xs: "15px", md: "30px"}, px: {xs: "15px", lg: "0px"}, display: "flex", gap: {xs: "15px", md: "30px"}, flexDirection: { xs: "column", md: "row" } }}>
         <Box sx={{ flex: 1, position: "relative", borderRadius: {xs: "20px", md: "40px"}, overflow: "hidden", boxShadow: "0px 8px 24px rgba(0,0,0,0.3)" }}>
