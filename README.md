@@ -13,6 +13,15 @@ To run front and back: npm start
 
 Using env variables to connect to a MongoDB Atlas Cluster 0 on Irene's account.
 
+
+# Usuarios disponibles:
+almejitav@verdefiles.com
+contraseña: almejaverde
+
+pepemasa@carambolas.cl
+contraseña: carambolas
+
+
 # Estructura:
 5 modelos:
 - Cliente
