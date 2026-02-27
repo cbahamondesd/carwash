@@ -19,7 +19,12 @@ const createOrden = async (req, res) => {
 // GET ALL
 const getAllOrdenes = async (req, res) => {
   try {
-    let list = await Orden.find().sort({ ordenType: 1 }).exec();
+    let list = await Orden.find()
+      .populate("cliente", "nombre")
+      .populate("funcionario", "nombre apellido")
+      .populate("servicio", "descripcion valor_servicio")
+      .sort({ createdAt: -1 })
+      .exec();
     res.status(200).json(list);
   } catch (error) {
     console.log("Error" + error.message);

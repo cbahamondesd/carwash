@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
@@ -9,8 +8,14 @@ const theme = createTheme({
         secondary: {
         main: '#33489E',
         },
+        terciary: {
+        main: '#639A88',
+        },
+        cuaternary: {
+        main: '#BDD5EA',
+        },
         error: {
-        main: red.A400,
+        main: '#CA3C25',
         },
     },
     justifyContent: "center",

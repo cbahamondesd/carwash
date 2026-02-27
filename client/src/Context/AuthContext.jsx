@@ -4,7 +4,7 @@ import {
     loginRequest,
     verifyTokenRequet,
     getFuncionarioByIdRequest
-} from "../Api/auth.js";
+} from "../api/auth.js";
 
 import Cookies from "js-cookie";
 export const AuthContext = createContext(null);
@@ -52,10 +52,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
-    const getFuncionarioByIdRequest = async (funcionarioId) => {
+    const getFuncionarioById = async (funcionarioId) => {
         try {
         const res = await getFuncionarioByIdRequest(funcionarioId);
-        return res.data; 
+        return res.data;
         } catch (error) {
         console.error("Error fetching funcionario by ID:", error);
         return null;
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }) => {
             isAuthenticated,
             errors,
             logout,
-            getFuncionarioByIdRequest
+            getFuncionarioByIdRequest: getFuncionarioById
         }}
         >
         {children}

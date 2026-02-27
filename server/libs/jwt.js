@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"; // Importando la librería jsonwebtoken para crear el token
 
-import { TOKEN_SECRET } from "../config.js"; // Importando la clave secreta para firmar el token
+import { TOKEN_SECRET } from "../config/config.js"; // Importando la clave secreta para firmar el token
 
 export function createAccessToken(payload) { // Función para crear el token con el payload que recibe
     return new Promise((resolve, reject) => { // Retornar una promesa

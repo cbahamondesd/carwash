@@ -13,18 +13,23 @@ const OrdenSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
-    cliente: [{ 
+    cliente: { 
       type: mongoose.Schema.Types.ObjectId, ref: Cliente
-    }],
+    },
     servicio:[{ 
       type: mongoose.Schema.Types.ObjectId, ref: Servicio
     }],
-    funcionario:[{ 
+    funcionario:{
       type: mongoose.Schema.Types.ObjectId, ref: Funcionario
-    }]
+    },
+    estado: {
+      type: String,
+      enum: ["pendiente", "en proceso", "cancelada", "aceptada"],
+      default: "aceptada"
+    }
 
   },
-  { timestamps: true }
+  { timestamps: true, collection: "ordenes" }
 );
 /*
 OrdenSchema.pre('save', async function(next) {

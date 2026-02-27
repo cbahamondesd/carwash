@@ -1,112 +1,98 @@
 import { createContext, useContext, useState } from "react";
-import { AuthContext } from "./AuthContext";
 import PropTypes from "prop-types";
 
 import {
-    createPetRequest,
-    getAllPetsRequest,
-    getPetRequest,
-    getMyPetsRequest,
-    updatePetRequest,
-    deletePetRequest
-} from "../Api/pets";
+    createServicio as createServicioRequest,
+    getAllServicios as getAllServiciosRequest,
+    getServicioById as getServicioByIdRequest,
+    updateServicio as updateServicioRequest,
+    deleteServicio as deleteServicioRequest,
+} from "../api/servicio.js";
 
-const PetContext = createContext();
+const ServiciosContext = createContext();
 
-export const usePets = () => {
-
-    const context = useContext(PetContext);
-
+export const useServicios = () => {
+    const context = useContext(ServiciosContext);
     if (!context) {
-        throw new Error("usePets must be used within a PetProvider");
+        throw new Error("useServicios must be used within a ServiciosProvider");
     }
-
     return context;
 };
 
-export function PetProvider({ children }) {
-    const [pets, setPets] = useState([]);
-    const { user } = useContext(AuthContext);
+export function ServiciosProvider({ children }) {
+    const [servicios, setServicios] = useState([]);
 
-    const createPet = async (pet) => {
+    const createServicio = async (servicio) => {
         try {
-            const petWithOwner = { ...pet, petOwner: user.id};
-            const res = await createPetRequest(petWithOwner);
+            const res = await createServicioRequest(servicio);
             console.log(res);
-            getAllPets();
+            await getAllServicios();
         } catch (error) {
             console.error(error);
         }
     };
 
-    const getAllPets = async () => {
+    const getAllServicios = async () => {
         try {
-        const res = await getAllPetsRequest();
-        setPets(res.data);
+            const res = await getAllServiciosRequest();
+            setServicios(res.data);
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     };
 
-    const getPet = async (id) => {
+    const getServicioById = async (id) => {
         try {
-            const res = await getPetRequest(id);
+            const res = await getServicioByIdRequest(id);
             if (res.status === 200) {
-                const updatedPets = pets.filter((pet) => pet._id !== id);
-                const fetchedPet = await res.data;
-                setPets([...updatedPets, fetchedPet])
+                const fetchedServicio = res.data;
+                setServicios(prev =>
+                    prev.map(s => s._id === id ? fetchedServicio : s)
+                );
             }
         } catch (error) {
             console.error(error);
         }
     };
 
-    const getMyPets = async () => {
+    const updateServicio = async (updatedServicio) => {
         try {
-        const res = await getMyPetsRequest();
-        setPets(res.data);
+            const res = await updateServicioRequest(updatedServicio._id, updatedServicio);
+            if (res.status === 200) {
+                setServicios(prev =>
+                    prev.map(s => s._id === updatedServicio._id ? updatedServicio : s)
+                );
+            }
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     };
 
-    const updatePet = async (updatedPet) => {
+    const deleteServicio = async (id) => {
         try {
-        const res = await updatePetRequest(updatedPet.id, updatedPet);
-        if (res.status === 200){
-            setPets(prevPets => prevPets.map(pet => (pet.id === updatedPet.id ? updatedPet : pet)))
-        }
+            const res = await deleteServicioRequest(id);
+            if (res.status === 200) setServicios(servicios.filter(s => s._id !== id));
         } catch (error) {
-        console.error(error);
-        }
-    };
-
-    const deletePet = async (id) => {
-        try {
-        const res = await deletePetRequest(id);
-        if (res.status === 200) setPets(pets.filter((pet) => pet.id !== id));
-        } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     };
 
     return (
-        <PetContext.Provider
-        value={{
-            pets,
-            createPet,
-            getAllPets,
-            getPet,
-            getMyPets,
-            updatePet,            
-            deletePet,
-        }}
+        <ServiciosContext.Provider
+            value={{
+                servicios,
+                createServicio,
+                getAllServicios,
+                getServicioById,
+                updateServicio,
+                deleteServicio,
+            }}
         >
-        {children}
-        </PetContext.Provider>
+            {children}
+        </ServiciosContext.Provider>
     );
-    }
+}
 
-PetProvider.propTypes = {
+ServiciosProvider.propTypes = {
     children: PropTypes.node.isRequired,
 };

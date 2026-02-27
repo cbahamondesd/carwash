@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"; // Importando la librería jsonwebtoken para verificar el token
 
-import { TOKEN_SECRET } from "../config/config";
-// Importando la clave secreta del token
+import { TOKEN_SECRET } from "../config/config.js"; // Importando la clave secreta para verificar el token
 
 export const authRequired = (req, res, next) => {
 

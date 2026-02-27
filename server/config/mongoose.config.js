@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const carwashConnect = () => {
     mongoose
-    .connect("mongodb://localhost/carwashdb", { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("conectado a la BD correctamente");
     })

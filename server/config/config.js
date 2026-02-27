@@ -1,1 +1,1 @@
-export const TOKEN_SECRET = 'autitos clave secreta'
+export const TOKEN_SECRET = process.env.TOKEN_SECRET;

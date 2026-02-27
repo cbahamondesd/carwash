@@ -25,14 +25,22 @@ const ClienteSchema = new mongoose.Schema(
                 message: "Por favor ingresa un número de teléfono válido"
             }
         },
-        vehiculos: {
-                type: Number,
-                required: [true, "El número de vehículos es requerido."],
-                min: 0
-        },
+        vehiculos: [
+            {
+                patente: {
+                    type: String,
+                    required: [true, "La patente es requerida."]
+                },
+                tipoVehiculo: {
+                    type: String,
+                    required: [true, "El tipo de vehículo es requerido."]
+                }
+            }
+        ],
         id_orden: {
                 type: Number,
-                unique: true
+                unique: true,
+                sparse: true
         }
         
     },

@@ -7,8 +7,10 @@ export const ButtonComp = (props) => {
     <Button
       type={props.type}
       variant="contained"
-      color="secondary"
-      onClick={props.onclick}
+      size="small"
+      color="primary"
+      onClick={props.onClick}
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       {props.name}
     </Button>

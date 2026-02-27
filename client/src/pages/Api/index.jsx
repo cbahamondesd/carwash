@@ -1,4 +1,4 @@
-import useFetch from "../../Hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 function Api() {
     const { data, loading, error } = useFetch(

@@ -13,7 +13,7 @@ const FuncionarioSchema = new mongoose.Schema(
         email: {
             type: String,
             required: [true, "El correo electrónico es requerido"],
-            unique: true, // Asegura que el correo electrónico sea único
+            unique: true,
             lowercase: true,
             trim: true,
             validate: {

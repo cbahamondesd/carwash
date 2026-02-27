@@ -1,24 +1,23 @@
 import axios from "axios";
 import Layout from "../../layout";
-import * as React from 'react';
-import { 
+import {
     Avatar,
     Button,
     CssBaseline,
-    TextField,
-    Grid,
     Box,
     Typography,
-    Container 
+    Container,
+    Snackbar,
+    Alert
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { useForm } from "react-hook-form"; // Importamos el hook de react-hook-form
-
+import { useForm } from "react-hook-form";
 import { useState , useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import styles from "./Ordenes.module.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 const getFormattedPrice = (valor_servicio) => `$${valor_servicio.toFixed(0)}`; 
 
@@ -30,6 +29,8 @@ export default function RegistroOrden () {
   } = useForm(); // Inicializamos el hook de react-hook-form
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const preselectedId = location.state?.preselectedId;
 
   const [nombre, setNombre] = useState("");
   const [nombreFuncionario, setNombreFuncionario] = useState("");
@@ -43,6 +44,16 @@ export default function RegistroOrden () {
 
   const [total, setTotal] = useState(0);
 
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
+  const showSnackbar = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   const handleOnChange = (position) => {
     console.log("position " + position);
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -50,6 +61,12 @@ export default function RegistroOrden () {
     );
 
     setCheckedState(updatedCheckedState);
+
+    const selectedServices = updatedCheckedState.reduce((acc, checked, index) => {
+      if (checked) acc.push(listaserv[index]._id);
+      return acc;
+    }, []);
+    setServicio(selectedServices);
 
     const totalPrice = updatedCheckedState.reduce(
       (sum, currentState, index) => {
@@ -66,13 +83,13 @@ export default function RegistroOrden () {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/cliente/get/")
+    axios.get("http://localhost:8000/api/cliente")
     .then((res) => setListaCli(res.data))
     .catch((err) => console.log("Error al obtener clientes ", err));
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/personal/get")
+    axios.get("http://localhost:8000/funcionarios")
     .then((res) => setListaEmpl(res.data))
     .catch((err) => console.log("Error al obtener funcionarios ", err));
   }, []);
@@ -83,17 +100,29 @@ export default function RegistroOrden () {
     .catch((err) => console.log("Error al obtener servicios ", err));
   }, []);
 
+  useEffect(() => {
+    const initial = new Array(listaserv.length).fill(false);
+    if (preselectedId) {
+      const idx = listaserv.findIndex((s) => s._id === preselectedId);
+      if (idx !== -1) {
+        initial[idx] = true;
+        setServicio([preselectedId]);
+        setTotal(listaserv[idx].valor_servicio);
+      }
+    }
+    setCheckedState(initial);
+  }, [listaserv]);
 
-  const createorden = async () => {
-    //Obtener arreglo de servicios seleccionados
-    alert("setCheckedState " + setCheckedState.length);
-    return(false);
 
-    if (nombre !== "" && nombreFuncionario !== "" ) {
+  const createorden = async (e) => {
+    e.preventDefault();
+
+    if (nombre !== "" && nombreFuncionario !== "" && servicio.length >= 1) {
       let data = {
         cliente: nombre,
         funcionario: nombreFuncionario,
         servicio: servicio,
+        mtoTotal: total,
       };
       try {
         let result = await axios.post(
@@ -101,14 +130,14 @@ export default function RegistroOrden () {
           data
         );
         if (result.status === 200) {
-            alert("Orden creada correctamente");
-            navigate("/");
+            showSnackbar("Orden creada correctamente", "success");
+            setTimeout(() => navigate("/"), 1500);
         }
       } catch (error) {
-        alert(error.response.data.message);
+        showSnackbar(error.response?.data?.message || "Error al crear la orden", "error");
       }
     } else {
-       alert("Favor completar formulario de registro");
+      showSnackbar("Favor completar el formulario y seleccionar al menos un servicio", "warning");
     }
   };
 
@@ -116,9 +145,24 @@ export default function RegistroOrden () {
     navigate("/");
   };
 
+  const goToOrdenes = () => {
+    navigate("/ordenes");
+  };
+
+  const verListaClientes = () => {
+    navigate("/clientes");
+  };
   
   return (
     <Layout>
+      <Navbar 
+        onClick1={goToHome}
+        linkName1={"Inicio"}
+        onClick2={verListaClientes}
+        linkName2={"Clientes"}
+        onClick3={goToOrdenes}
+        linkName3={"Ordenes"}
+      />
      <Container component="main" maxWidth="sm">
             <CssBaseline />
             <Box
@@ -142,14 +186,14 @@ export default function RegistroOrden () {
             <select name="nombre" onChange={(e) => setNombre(e.target.value)}>
             <option>Seleccione</option>
             {listacli.map((cliente) => (
-                <option value={cliente._id}>{cliente.nombre}</option>
+                <option key={cliente._id} value={cliente._id}>{cliente.nombre}</option>
             ))}
             </select>
           <label>Funcionario:</label>
             <select name="nombreFuncionario" onChange={(e) => setNombreFuncionario(e.target.value)}>
             <option>Seleccione</option>
             {listaempl.map((empleados) => (
-                <option value={empleados._id}>{empleados.nombreFuncionario}</option>
+                <option key={empleados._id} value={empleados._id}>{empleados.nombre} {empleados.apellido}</option>
             ))}
           </select>
           <label>Servicio:</label>
@@ -196,6 +240,26 @@ export default function RegistroOrden () {
      </div>    
         </Box>
         </Container>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{
+            width: "100%",
+            backgroundColor: "#DFF150",
+            color: "#33489E",
+            "& .MuiAlert-icon": { color: "#CA3C25" },
+            "& .MuiAlert-action .MuiIconButton-root": { color: "#33489E" },
+          }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Layout>
   );
 };

@@ -56,10 +56,12 @@ export const login = async (req, res) => {
 
     try {
 
-        const funcionarioFound = await Funcionario.findOne({ email }); 
-        const isMatch = await bcrypt.compare(password, funcionarioFound.password); 
-        if (!funcionarioFound && !isMatch)
-        return res.status(400).json(["Funcionario o contraseña incorrecta"]);
+        const funcionarioFound = await Funcionario.findOne({ email });
+        if (!funcionarioFound)
+            return res.status(400).json(["Funcionario o contraseña incorrecta"]);
+        const isMatch = await bcrypt.compare(password, funcionarioFound.password);
+        if (!isMatch)
+            return res.status(400).json(["Funcionario o contraseña incorrecta"]);
 
         const token = await createAccessToken({ id: funcionarioFound._id }); // Crear token
         res.cookie("token", token); // Guardar el token en las cookies
@@ -82,17 +84,15 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
 
     res.cookie("token", "", {
-        // Limpiar las cookies
-        expires: new Date(0), // Fecha de expiración
+        expires: new Date(0),
     });
 
-    res.send("Haz cerrado sesión y limpiado cookies."); 
     return res.sendStatus(204);
 };
 
 export const profile = async (req, res) => {
 
-    const funcionarioFound = await Funcionario.findById(req.funcionario.id);
+    const funcionarioFound = await Funcionario.findById(req.user.id);
     
     if (!funcionarioFound)
         return res.status(400).json({ message: "Funcionario no encontrado" }); 
