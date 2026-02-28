@@ -10,9 +10,9 @@ export const ButtonPrimary = (props) => {
       size="small"
       color="primary"
       onClick={props.onClick}
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center", ...props.sx }}
     >
-      {props.name}
+      {props.children || props.name}
     </Button>
   );
 };

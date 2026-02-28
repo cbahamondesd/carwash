@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useOrdenes } from "../../context/OrdenesContext";
 import axios from "axios";
 import Layout from "../../layout";
 import Navbar from "../../components/Navbar/Navbar";
 import OrdenesFilter from "../../components/OrdenesFilter";
+import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import {
   Container,
   Typography,
@@ -16,7 +19,10 @@ import {
   Paper,
   CircularProgress,
   Box,
+  IconButton,
 } from "@mui/material";
+import { ButtonPrimary } from "../../components/ButtonComp/ButtonPrimary";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const estadoColors = {
   pendiente:    { backgroundColor: "#CA3C25", color: "#fff" },
@@ -28,9 +34,13 @@ const estadoColors = {
 
 export default function ListadoOrdenes() {
   const navigate = useNavigate();
+  const { deleteOrden } = useOrdenes();
   const [ordenes, setOrdenes] = useState([]);
   const [filteredOrdenes, setFilteredOrdenes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const { funcionario, loading: authLoading } = useAuth();
+  const misOrdenes = searchParams.get("mias") === "true";
 
   const handleEstadoChange = async (id, nuevoEstado) => {
     setOrdenes(prev =>
@@ -44,16 +54,27 @@ export default function ListadoOrdenes() {
     });
   };
 
+  const handleDelete = async (id) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar esta orden?")) {
+      await deleteOrden(id);
+      setOrdenes(prev => prev.filter(o => o._id !== id));
+      setFilteredOrdenes(prev => prev.filter(o => o._id !== id));
+    }
+  }
+
   useEffect(() => {
+    if (misOrdenes && authLoading) return;
+    setLoading(true);
+    const params = misOrdenes && funcionario?._id ? { funcionarioId: funcionario._id } : {};
     axios
-      .get("http://localhost:8000/api/orden/get")
+      .get("http://localhost:8000/api/orden/get", { params })
       .then((res) => {
         setOrdenes(res.data);
         setFilteredOrdenes(res.data);
       })
       .catch((err) => console.log("Error al obtener ordenes", err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [misOrdenes, funcionario, authLoading]);
 
   return (
     <Layout>
@@ -65,7 +86,7 @@ export default function ListadoOrdenes() {
       />
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Typography variant="h5" fontWeight={600} mb={3}>
-          Listado de Órdenes
+          {misOrdenes ? "Mis Órdenes" : "Listado de Órdenes"}
         </Typography>
 
         <OrdenesFilter ordenes={ordenes} setFilteredOrdenes={setFilteredOrdenes} />
@@ -81,7 +102,7 @@ export default function ListadoOrdenes() {
             <Table>
               <TableHead sx={{ backgroundColor: "#33489E" }}>
                 <TableRow>
-                  {["Fecha", "Cliente", "Servicios", "Total", "Estado", "Funcionario"].map((h) => (
+                  {["Fecha", "Cliente", "Servicios", "Total", "Estado", "Eliminar","Funcionario"].map((h) => (
                     <TableCell key={h} sx={{ color: "#DFF150", fontWeight: 700 }}>
                       {h}
                     </TableCell>
@@ -120,6 +141,11 @@ export default function ListadoOrdenes() {
                       </select>
                     </TableCell>
                     <TableCell>
+                      <IconButton color="error" onClick={() => handleDelete(orden._id)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell>
                       {orden.funcionario
                         ? `${orden.funcionario.nombre} ${orden.funcionario.apellido}`
                         : "—"}
@@ -130,6 +156,11 @@ export default function ListadoOrdenes() {
             </Table>
           </TableContainer>
         )}
+        <Box sx={{ display: "flex", justifyContent: "center", my: 2, width: "100%" }}>
+          <ButtonPrimary onClick={() => { misOrdenes ? navigate("/ordenes") : navigate("/ordenes?mias=true") }} sx={{ minWidth: "200px" }}>
+            {misOrdenes ? "Ver todas las órdenes" : "Ver mis órdenes" }
+          </ButtonPrimary>
+        </Box>
       </Container>
     </Layout>
   );

@@ -140,7 +140,6 @@ function RegistroCliente() {
                 </Box>
             </Container>
 
-            {/* Success dialog */}
             <Dialog open={dialog === "success"}>
                 <DialogTitle>Cliente registrado</DialogTitle>
                 <DialogContent>
@@ -155,8 +154,7 @@ function RegistroCliente() {
                 </DialogActions>
             </Dialog>
 
-            {/* Error dialog */}
-            <Dialog open={dialog === "error"} onClose={() => { setDialog(null); reset(); }}>
+            <Dialog open={dialog === "error"} onClose={() => { setDialog(null) }}>
                 <DialogTitle>Error al registrar</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -164,7 +162,7 @@ function RegistroCliente() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { setDialog(null); reset(); }}>
+                    <Button onClick={() => { setDialog(null) }}>
                         Intentar de nuevo
                     </Button>
                 </DialogActions>

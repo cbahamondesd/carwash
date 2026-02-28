@@ -1,6 +1,5 @@
 import Orden from "../models/orden.model.js";
 
-//CREATE
 const createOrden = async (req, res) => {
   try {
     let data = req.body;
@@ -16,10 +15,12 @@ const createOrden = async (req, res) => {
   }
 };
 
-// GET ALL
 const getAllOrdenes = async (req, res) => {
   try {
-    let list = await Orden.find()
+    const { funcionarioId } = req.query;
+    const filter = funcionarioId ? { funcionario: funcionarioId } : {};
+
+    let list = await Orden.find(filter)
       .populate("cliente", "nombre")
       .populate("funcionario", "nombre apellido")
       .populate("servicio", "descripcion valor_servicio")
@@ -34,7 +35,6 @@ const getAllOrdenes = async (req, res) => {
   }
 };
 
-// GET BY ID
 const getOrdenById = async (req, res) => {
   try {
     let id = req.params.id;
@@ -48,7 +48,6 @@ const getOrdenById = async (req, res) => {
   }
 };
 
-//UPDATE
 const updateOrden = async (req, res) => {
   try {
     let id = req.params.id;
@@ -63,7 +62,6 @@ const updateOrden = async (req, res) => {
   }
 };
 
-//DELETE
 const deleteOrden = async (req, res) => {
   try {
     let id = req.params.id;

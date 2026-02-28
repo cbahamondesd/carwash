@@ -8,19 +8,25 @@ import theme from './assets/theme/theme.js';
 import { AuthProvider } from './context/AuthContext';
 import { ServiciosProvider } from './context/ServiciosContext.jsx';
 import { ClientesProvider } from './context/ClientesContext.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import { OrdenesProvider } from './context/OrdenesContext.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ServiciosProvider>
-        <ClientesProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App />
-          </ThemeProvider>
-        </ClientesProvider>
-      </ServiciosProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <ServiciosProvider>
+          <ClientesProvider>
+            <OrdenesProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App />
+              </ThemeProvider>
+            </OrdenesProvider>
+          </ClientesProvider>
+        </ServiciosProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

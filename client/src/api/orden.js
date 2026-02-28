@@ -2,7 +2,7 @@ import axios from "./axios";
 
 export const createOrden = async (orden) => axios.post("/api/orden/new", orden);
 
-export const getAllOrdenes = async () => axios.get("/api/orden/get");
+export const getAllOrdenes = async ( params = {}) => axios.get("/api/orden/get", { params });
 
 export const getOrdenById = async (id) => axios.get(`/api/orden/get/${id}`);
 

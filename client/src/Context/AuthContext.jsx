@@ -5,9 +5,11 @@ import {
     verifyTokenRequet,
     getFuncionarioByIdRequest
 } from "../api/auth.js";
-
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 export const AuthContext = createContext(null);
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -22,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const signup = async (funcionario) => {
         try {
@@ -50,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         Cookies.remove("token");
         setFuncionario(null);
         setIsAuthenticated(false);
+        navigate("/login");
     };
 
     const getFuncionarioById = async (funcionarioId) => {

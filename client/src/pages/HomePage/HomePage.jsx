@@ -61,7 +61,7 @@ export const HomePage = () => {
             <Typography variant="h4" sx={{ color: "secondary.main", fontSize: "48px", fontWeight: "bold" }}>
               Hola, {funcionario.nombre}!
             </Typography>
-            <Button variant="contained" onClick={() => navigate("/ordenes")} sx={{ whiteSpace: "nowrap", minWidth: "180px" }}>
+            <Button variant="contained" onClick={() => navigate("/ordenes?mias=true")} sx={{ whiteSpace: "nowrap", minWidth: "180px" }}>
               Ver mis órdenes
             </Button>
           </Box>

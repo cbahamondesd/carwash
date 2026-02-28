@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage/HomePage";
 import NotFound from "./components/NotFound/NotFound";
 import InicioSesion from "./pages/Funcionarios/InicioSesion";
@@ -15,7 +15,6 @@ import RegistroCliente from "./pages/Cliente/RegistroCliente";
 function App() {
   return (
     <div>
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage/>}></Route>
           <Route path="/login" element={<InicioSesion/>}></Route>
@@ -30,7 +29,6 @@ function App() {
           <Route path="/clientes/registro" element={<RegistroCliente/>}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }

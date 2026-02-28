@@ -115,7 +115,7 @@ export default function RegistroOrden() {
         let result = await axios.post("http://localhost:8000/api/orden/new", data);
         if (result.status === 200) {
           showSnackbar("Orden creada correctamente", "success");
-          setTimeout(() => navigate("/"), 1500);
+          setTimeout(() => navigate("/ordenes"), 1000);
         }
       } catch (error) {
         showSnackbar(error.response?.data?.message || "Error al crear la orden", "error");
@@ -144,7 +144,6 @@ export default function RegistroOrden() {
           <Box component="form" onSubmit={createorden}>
             <Stack spacing={3}>
 
-              {/* Cliente */}
               <FormControl fullWidth>
                 <InputLabel id="cliente-label">Cliente</InputLabel>
                 <Select
@@ -162,7 +161,6 @@ export default function RegistroOrden() {
                 </Select>
               </FormControl>
 
-              {/* Funcionario */}
               <FormControl fullWidth>
                 <InputLabel id="funcionario-label">Funcionaria(o) asignada(o)</InputLabel>
                 <Select
@@ -180,7 +178,6 @@ export default function RegistroOrden() {
                 </Select>
               </FormControl>
 
-              {/* Servicios */}
               <Box>
                 <Typography variant="subtitle1" fontWeight={600} mb={1}>
                   Servicios
