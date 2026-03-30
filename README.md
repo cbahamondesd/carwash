@@ -1,3 +1,6 @@
+_ En ***español*** más abajo._
+
+
 # LavAutos — Car Wash Management App
 
 A full-stack web app for managing a car wash business: staff can log in, register customers and their vehicles, create and track work orders, and manage available services.
